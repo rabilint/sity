@@ -31,18 +31,31 @@
         const config = {
 
           tabledata : [],
-        apiUrl : "https://mock-api.shpp.me/<nsurname>/users "
+        apiUrl : "https://mock-api.shpp.me/nmaiboroda/users "
       }
-        //create Tabulator on DOM element with id "example-table"
-        let ggggg = config.tabledata = fetch(config.apiUrl).then((response) => {return response.json(); });
-        console.log(ggggg);
-        let gg = ggggg.data
-        ;
-        console.log(gg)
+        async function getUsers(url) {
+
+            try {
+                let res = await fetch(url);
+                return await res.json()
+             } catch (error) {
+                console.log(error);
+            }
+        }
+        const foo = (data) => {
+            console.log("foo", data)
+            return config.tabledata = data;
+            console.log(config.tabledata);
+        }
+
+        
+
+        
+        console.log(config.tabledata);
         var table = new Tabulator("#example-table", {
            height:130, // set heig of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
-           data:config.tabledata = fetch(config.apiUrl).then((response) => {return response.json(); }),
-
+          
+           data:config.tabledata = getUsers(config.apiUrl).then(data => foo(data)),
 
            layout:"fitColumns", //fit columns to width of table (optional)
            columns:[ //Define Table Columns
